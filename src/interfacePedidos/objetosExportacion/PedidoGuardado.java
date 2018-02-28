@@ -667,7 +667,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             //Connection cc=(Connection)bd;
-            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' order by NRO_PEDIDO desc";
+            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' and cantidad_facturada > 0 order by NRO_PEDIDO desc";
             
             Statement st=bd.createStatement();
             st.execute(sql);
