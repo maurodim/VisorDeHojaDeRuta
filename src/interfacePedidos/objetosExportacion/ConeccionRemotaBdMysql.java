@@ -28,9 +28,11 @@ public class ConeccionRemotaBdMysql implements Conectar{
                 //String url="jdbc:mysql://192.168.0.111/sidercon";
 		//String usuario="mauro";
 		//String clave="mauro";
+                
                 String url="jdbc:mysql://192.168.0.111/sidercon";
                 String usuario="hdr";
                 String clave="daniel";
+                
 		Connection cn=null;
 		try{
 			Class.forName(driver).newInstance();
