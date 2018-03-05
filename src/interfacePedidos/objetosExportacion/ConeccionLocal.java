@@ -30,12 +30,7 @@ private String clave;
 
 //private Connection cn;
     public ConeccionLocal() throws FileNotFoundException, IOException {
-        File archivo=new File("Gestor//coneccion.txt");
-        FileReader fR=new FileReader(archivo);
-        BufferedReader bufferR=new BufferedReader(fR);
-        archivoBase=bufferR.readLine();
-        //archivoBase="C:\\Users\\Remoto1\\Documents\\NetBeansProjects\\VisorDeHojaDeRuta\\trabajos_deposito.mdb";
-        System.out.println(archivoBase);
+        
     }
 
     public ConeccionLocal(int idBase) {
@@ -57,7 +52,7 @@ private String clave;
                     dataSource.setUser(usuario);
                     dataSource.setDatabaseName("sidercon");
                     dataSource.setPassword(clave);
-                    dataSource.setServerName("localhost");//192.168.0.111
+                    dataSource.setServerName("192.168.0.111");//192.168.0.111
                     cn=dataSource.getConnection();
                  }catch(Exception ex){
                     //GuardarMovimientos gArch=new Archivador();

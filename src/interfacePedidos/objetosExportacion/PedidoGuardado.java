@@ -667,7 +667,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             //Connection cc=(Connection)bd;
-            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' and cantidad_facturada > 0 order by NRO_PEDIDO desc";
+            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' and cantidad_descargada < cantidad_facturada order by NRO_PEDIDO desc";
             
             Statement st=bd.createStatement();
             st.execute(sql);
@@ -735,12 +735,14 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             while(rs.next()){
                 PedidosParaReparto pedi=new PedidosParaReparto();
                 pedi.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
-                Double pedidas=rs.getDouble("CANT_PEDID");
-                Double remitidas=rs.getDouble("cantidad_Descargada");
-                Double facturadas=rs.getDouble("cantidad_facturada");
+                Double equivalencia=rs.getDouble("equiva");
+                Double pedidas=rs.getDouble("CANT_PEDID") / equivalencia;
+                
+                Double remitidas=rs.getDouble("cantidad_Descargada") / equivalencia;
+                Double facturadas=rs.getDouble("cantidad_facturada") / equivalencia;
                 pedi.setIdPedidosTango(rs.getInt("ID_GVA03"));
                 Double cantidadFinal=0.00;
-                if(remitidas==0){
+                if(remitidas==facturadas){
                     cantidadFinal=0.00;
                 }else{
                     if(pedidas==remitidas){
@@ -754,8 +756,10 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     cantidadFinal=remitidas - facturadas;
                     }
                 }
+                System.out.println("cantidades pedidos:"+pedidas+" cantidades facturadas: "+facturadas+" cantidades remitidas: "+remitidas);
                 pedi.setNumeroVendedor(rs.getInt("COD_VENDED"));
-                pedi.setCantidadArticulo(cantidadFinal);
+                //as
+                pedi.setCantidadArticulo(pedidas);
                 pedi.setCantidadArticuloPendiente(facturadas);
                 pedi.setCantidadArticulosTotales(remitidas);
                 pedi.setCodigoArticulo(rs.getString("COD_ARTICU"));
@@ -855,8 +859,8 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 }else{
                     descArtic=ped.getDescripcionArticulo();
                 }
-                sql="select pedidos_carga1.numero,pedidos_carga1.entrega from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPed+"' and CANT_PEDID ="+ped.getCantidadArticulo()+" and TALON_PEDI ='"+ped.getEmpresa()+"' and ID_GVA03="+ped.getIdPedidosTango();
-                
+                sql="select pedidos_carga1.numero,pedidos_carga1.entrega from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPed+"' and CANT_PEDID ="+ped.getCantidadArticulo()+" and TALON_PEDI ='"+ped.getEmpresa()+"' and COD_ARTIC ='"+ped.getCodigoArticulo()+"'";
+                //as
                 st.execute(sql);
                 rs=st.getResultSet();
                 int h=0;

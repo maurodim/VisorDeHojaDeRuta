@@ -916,7 +916,8 @@ private void validarEnvio(){
             aa++;
         }
         if(fechasPedidos !=null){
-                exp.notificar(fechasPedidos);
+            fechasPedidos=fechasPedidos.substring(4);
+            exp.notificar(fechasPedidos);
             }
         listadoDePedidos.clear();
         listadoDePedidos=verificado;
@@ -933,6 +934,7 @@ private String fechaCalendario(String fecha) throws IOException{
             Logger.getLogger(EditorDePedidos.class.getName()).log(Level.SEVERE, null, ex);
         }
     //int posi=fecha.indexOf("/");
+    fecha=fecha.replaceAll("-","");
     int dd=Integer.parseInt(fecha.substring(0,2));
     int mm=Integer.parseInt(fecha.substring(3,5));
     int aa=Integer.parseInt(fecha.substring(6));
