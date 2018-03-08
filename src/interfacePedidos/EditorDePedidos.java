@@ -352,6 +352,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         });
 
         jButton4.setText("Actualizar");
+        jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -359,6 +360,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         });
 
         jButton5.setText("Eliminar");
+        jButton5.setEnabled(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -550,7 +552,9 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             
             System.err.println(ped.getCodigoTangoDePedido()+" fecha "+ped.getFechaPedidosTango()+" entrega "+ped.getFechaEnvio()+" EMPRESA "+ped.getEmpresa());
             String fPedido=ped.getFechaPedidosTango();
+            
             String fEnvio=ped.getFechaEnvio();
+            if(fEnvio.length() > 10)fEnvio.substring(0,10);
             int marcadoReparto=0;
             int marcadoProceso=0;
             Double cantidad=(Double)jTable1.getValueAt(aaa,5);
