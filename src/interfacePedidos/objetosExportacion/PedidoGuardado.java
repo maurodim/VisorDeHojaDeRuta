@@ -735,9 +735,10 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             while(rs.next()){
                 PedidosParaReparto pedi=new PedidosParaReparto();
                 pedi.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
-                Double pedidas=rs.getDouble("CANT_PEDID");
-                Double remitidas=rs.getDouble("cantidad_Descargada");
-                Double facturadas=rs.getDouble("cantidad_facturada");
+                Double equivalencia=rs.getDouble("CAN_EQUI_V");
+                Double pedidas=rs.getDouble("CANT_PEDID") / equivalencia;
+                Double remitidas=rs.getDouble("cantidad_Descargada") / equivalencia;
+                Double facturadas=rs.getDouble("cantidad_facturada") / equivalencia;
                 pedi.setIdPedidosTango(rs.getInt("ID_GVA03"));
                 Double cantidadFinal=0.00;
                 if(remitidas==0){
