@@ -755,7 +755,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     }
                 }
                 pedi.setNumeroVendedor(rs.getInt("COD_VENDED"));
-                pedi.setCantidadArticulo(cantidadFinal);
+                pedi.setCantidadArticulo(pedidas);
                 pedi.setCantidadArticuloPendiente(facturadas);
                 pedi.setCantidadArticulosTotales(remitidas);
                 pedi.setCodigoArticulo(rs.getString("COD_ARTICU"));
