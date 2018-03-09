@@ -735,7 +735,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             while(rs.next()){
                 PedidosParaReparto pedi=new PedidosParaReparto();
                 pedi.setCodigoTangoDePedido(rs.getString("NRO_PEDIDO"));
-                Double equivalencia=rs.getDouble("CAN_EQUI_V");
+                Double equivalencia=rs.getDouble("equiva");
                 Double pedidas=rs.getDouble("CANT_PEDID") / equivalencia;
                 Double remitidas=rs.getDouble("cantidad_Descargada") / equivalencia;
                 Double facturadas=rs.getDouble("cantidad_facturada") / equivalencia;
