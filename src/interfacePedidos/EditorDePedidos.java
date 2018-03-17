@@ -120,7 +120,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
                 columna++;
         }
         jTable1.setModel(tablaExp);
-        recargarFormulario();
+        //recargarFormulario();
         this.jButton1.setEnabled(false);
         
     }
@@ -796,7 +796,8 @@ private void leerChooser(){
 
 }
 public void recargarFormulario(){
-        Timer timer=new Timer(120000,new ActionListener(){ 
+    /*    
+    Timer timer=new Timer(120000,new ActionListener(){ 
     public void actionPerformed(ActionEvent e) 
     { 
         validarEnvio();  
@@ -811,12 +812,14 @@ public void recargarFormulario(){
           }
 */
 //jTable1.removeAll();
+/*
           listadoDePedidos=exx.leer();
           System.out.println("ESTA EN EL BUCLE");
           cargarTabla();
      } 
 }); 
         timer.start();
+*/
 }
 private void cargarTabla(){
         //String fecha=fechaPedido;       System.out.println("cantidad array "+listadoDePedidos.size());
