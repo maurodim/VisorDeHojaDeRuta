@@ -72,7 +72,7 @@ public class Selector extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
-        setTitle("Selector de Vendedor");
+        setTitle("Transmicion de Pedido a Reparto");
 
         jLabel1.setText("Seleccionar Vendedor");
 

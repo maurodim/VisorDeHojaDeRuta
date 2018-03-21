@@ -713,9 +713,11 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
         modelo.addColumn("NRO PEDIDO");
         modelo.addColumn("CLIENTE");
         Object[] fila=new Object[3];
+        String fechaP;
         while(it.hasNext()){
             pedido=(Pedidos) it.next();
-            fila[0]=pedido.getFechaDePedido();
+            fechaP=pedido.getFechaDePedido().substring(0,10);
+            fila[0]=fechaP;
             fila[1]=pedido.getNumeroPedidos();
             fila[2]=pedido.getRazonSocial();
             modelo.addRow(fila);
@@ -863,6 +865,11 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 int h=0;
                 while(rs.next()){
                     h++;
+                    if(fechasPedidos !=null){
+                        
+                    }else{
+                        fechasPedidos="";
+                    }
                     fechasPedidos+=" esta intentando duplicar el pedido del sr. "+ped.getRazonSocial()+" pasado ha sistema HDR para el día "+rs.getString("entrega")+"\n";
                 }
                 System.out.println(sql+" cant repetidos "+h);
