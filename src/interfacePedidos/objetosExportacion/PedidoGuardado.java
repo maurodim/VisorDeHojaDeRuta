@@ -255,7 +255,7 @@ public class PedidoGuardado implements ExportacionDePedidos{
                          
                         
                             
-                        sql="insert into pedidos_carga1 (NRO_PEDIDO,FEC_PEDIDO,COD_CLIENT,RAZON_SOC,COND_VENTA,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_ARTIC,DESC_ARTIC,CANT_PEDID,CANT_FACT,CANT_DESC,entrega,reparto,peso,TALON_PEDI,numeroOriginal,zona,alerta,COD_VENDED,ID_GVA03) values ('"+ped.getCodigoTangoDePedido()+"','"+ped.getFechaPedidosTango()+"','"+ped.getCodigoCliente()+"','"+ped.getRazonSocial()+"',"+ped.getCondicionDeVenta()+",'"+ped.getObservaciones()+"','"+ped.getObservaciones1()+"','"+ped.getObservaciones2()+"','"+ped.getCodigoArticulo()+"','"+ped.getDescripcionArticulo()+"',"+ped.getCantidadArticulo()+","+ped.getCantidadArticuloPendiente()+","+ped.getCantidadArticulosTotales()+",'"+ped.getFechaEnvio()+"',"+ped.getMarcadoParaReparto()+",0.00"+",'"+ped.getEmpresa()+"',"+ultimoRegistro+","+ped.getZonaAsignada()+","+ped.getAlertaAsignada()+","+ped.getNumeroVendedor()+","+ped.getIdPedidosTango()+")";
+                        sql="insert into pedidos_carga1 (NRO_PEDIDO,FEC_PEDIDO,COD_CLIENT,RAZON_SOC,COND_VENTA,LEYENDA_1,LEYENDA_2,LEYENDA_3,COD_ARTIC,DESC_ARTIC,CANT_PEDID,CANT_FACT,CANT_DESC,entrega,reparto,peso,TALON_PEDI,numeroOriginal,zona,alerta,COD_VENDED,ID_GVA03,notificado) values ('"+ped.getCodigoTangoDePedido()+"','"+ped.getFechaPedidosTango()+"','"+ped.getCodigoCliente()+"','"+ped.getRazonSocial()+"',"+ped.getCondicionDeVenta()+",'"+ped.getObservaciones()+"','"+ped.getObservaciones1()+"','"+ped.getObservaciones2()+"','"+ped.getCodigoArticulo()+"','"+ped.getDescripcionArticulo()+"',"+ped.getCantidadArticulo()+","+ped.getCantidadArticuloPendiente()+","+ped.getCantidadArticulosTotales()+",'"+ped.getFechaEnvio()+"',"+ped.getMarcadoParaReparto()+",0.00"+",'"+ped.getEmpresa()+"',"+ultimoRegistro+","+ped.getZonaAsignada()+","+ped.getAlertaAsignada()+","+ped.getNumeroVendedor()+","+ped.getIdPedidosTango()+","+ped.getNotificacion()+")";
                         System.out.println(sql);
                         st.executeUpdate(sql);
                         //System.out.println(sql);
@@ -667,7 +667,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             //Connection cc=(Connection)bd;
-            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' order by NRO_PEDIDO desc";
+            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED,FECHA_FACTURA from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_FACTURA = '"+fecha+"' and Cantidad_Descargada > 0 order by NRO_PEDIDO desc";
             
             Statement st=bd.createStatement();
             st.execute(sql);
@@ -686,9 +686,11 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     pedi.setFechaDePedido(rs.getString("FECHA_PEDI"));
                     pedi.setRazonSocial(rs.getString("RAZON_SOCI"));
                     pedi.setEmpresa(rs.getString("TALON_PED"));
+                    pedi.setFechaFactura(rs.getString("FECHA_FACTURA"));
                     listadoP.add(pedi);
                     System.out.println(pedi.getRazonSocial());
                     pedidoNuevo=rs.getString("NRO_PEDIDO");
+                    
                 }
             }
             
@@ -709,14 +711,14 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
         Iterator it=listado.listIterator();
         Pedidos pedido;
         
-        modelo.addColumn("FECHA PEDIDO");
+        modelo.addColumn("FECHA FACTURA");
         modelo.addColumn("NRO PEDIDO");
         modelo.addColumn("CLIENTE");
         Object[] fila=new Object[3];
         String fechaP;
         while(it.hasNext()){
             pedido=(Pedidos) it.next();
-            fechaP=pedido.getFechaDePedido().substring(0,10);
+            fechaP=pedido.getFechaFactura().substring(0,10);
             fila[0]=fechaP;
             fila[1]=pedido.getNumeroPedidos();
             fila[2]=pedido.getRazonSocial();
@@ -743,13 +745,13 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 Double facturadas=rs.getDouble("cantidad_facturada") / equivalencia;
                 pedi.setIdPedidosTango(rs.getInt("ID_GVA03"));
                 Double cantidadFinal=0.00;
-                if(remitidas==0){
+                if(remitidas==pedidas){
                     cantidadFinal=0.00;
                 }else{
-                    if(pedidas==remitidas){
+                    if(remitidas==0){
                         cantidadFinal=pedidas;
                     }else{
-                    cantidadFinal=remitidas;
+                        cantidadFinal=remitidas;
                     }
                 }
                 if(facturadas > 0){
@@ -820,7 +822,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 //pedi.setMarcadoParaReparto(rs.getInt("reparto"));
                 //pedi.setZonaAsignada(rs.getInt("zona"));
                 //pedi.setAlertaAsignada(rs.getInt("alerta"));
-                listadoP.add(pedi);
+                if(cantidadFinal > 0.00)listadoP.add(pedi);
                 System.out.println(pedi.getRazonSocial());
                 
             }

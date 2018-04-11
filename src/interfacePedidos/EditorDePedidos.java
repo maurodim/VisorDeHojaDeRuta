@@ -165,6 +165,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
                 jButton1 = new javax.swing.JButton();
                 jButton4 = new javax.swing.JButton();
                 jButton5 = new javax.swing.JButton();
+                jCheckBox1 = new javax.swing.JCheckBox();
 
                 setClosable(true);
                 setMaximizable(true);
@@ -367,17 +368,22 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             }
         });
 
+        jCheckBox1.setText("<html>\n<strong>ANTICIPAR PEDIDO A ENCARGADO DE DEPÓSITO (PISV)</strong><br>\n-Para pedidos con procesamiento que así lo requieren\n</html>");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCheckBox1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -391,7 +397,8 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton4)
                     .addComponent(jButton5))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -409,7 +416,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
         );
@@ -512,7 +519,8 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         ArrayList enviosPed=new ArrayList();
         int cantidadItems=jTable1.getRowCount();
         ExportacionDePedidos exp=new PedidoGuardado();
-        
+        int notificar=0;
+        if(this.jCheckBox1.isSelected())notificar=1;
         for(int i=0;i <cantidadItems;i++){
             PedidosParaReparto ped=new PedidosParaReparto();
             ClientesTango cli=new ClientesTango();
@@ -599,6 +607,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
                 //fechaEnvio="00/00/0000";
             }
             ped.setFechaEnvio(fechaEnvio);
+            ped.setNotificacion(notificar);
             }
             if((Boolean)jTable1.getValueAt(aaa,3)){
                 int alerta=0;
@@ -663,7 +672,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             }
             String encabezado="Reparto - "+dia_sem+" "+fechEnv+" - "+empresa+" - "+nPedido+" - "+cliente;
             System.out.println(encabezado);
-            mail.enviarMailDeEnvioDePedido(encabezado,enviosPed,"");
+            mail.enviarMailDeEnvioDePedido(encabezado,enviosPed,"",notificar);
             enviosPed.clear();
             jProgressBar1.setValue(aaa);
             JOptionPane.showMessageDialog(this,"Pedido Enviado al Sistema HDR");
@@ -745,6 +754,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

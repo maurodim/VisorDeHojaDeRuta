@@ -100,7 +100,7 @@ public class Mail {
             System.err.println("EL MENSAJE NO SE PUDO ENVIAR "+me);
         }
     }
-   public void enviarMailDeEnvioDePedido(String encabezado,ArrayList listadoPedido,String causa){
+   public void enviarMailDeEnvioDePedido(String encabezado,ArrayList listadoPedido,String causa,int noti){
        init();
         try{
             MimeMessage mensaje=new MimeMessage(sesion);
@@ -110,7 +110,9 @@ public class Mail {
             //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
             mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("ventas@sidercon.com"));
             // aca envalúo el texto y el asunto recorriendo el pedido o los items eliminados
-            
+            if(noti==1){
+               mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("edp03@sidercon.com")); 
+            }
             
             mensaje.setSubject(encabezado);
             String detalle="";

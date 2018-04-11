@@ -109,6 +109,17 @@ public class PedidosParaReparto implements Busquedas{
         private int numeroVendedor;
         private Integer idPedidosTango;
         private Double cantidadOriginal;
+        private int notificacion;
+
+    public int getNotificacion() {
+        return notificacion;
+    }
+
+    public void setNotificacion(int notificacion) {
+        this.notificacion = notificacion;
+    }
+        
+        
 
     public Double getCantidadOriginal() {
         return cantidadOriginal;

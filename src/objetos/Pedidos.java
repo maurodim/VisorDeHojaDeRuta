@@ -46,6 +46,16 @@ public class Pedidos implements ExportacionDePedidos,Corregible{
     private String fechaVieja;
     private Rutas ruta;
     ArrayList detallePedidos=new ArrayList();
+    private String fechaFactura;
+
+    public String getFechaFactura() {
+        return fechaFactura;
+    }
+
+    public void setFechaFactura(String fechaFactura) {
+        this.fechaFactura = fechaFactura;
+    }
+    
 
     public Pedidos() {
         this.codigoCliente="";
