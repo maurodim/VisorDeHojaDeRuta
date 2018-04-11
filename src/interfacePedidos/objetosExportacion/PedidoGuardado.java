@@ -745,22 +745,22 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 Double facturadas=rs.getDouble("cantidad_facturada") / equivalencia;
                 pedi.setIdPedidosTango(rs.getInt("ID_GVA03"));
                 Double cantidadFinal=0.00;
-                if(remitidas==pedidas){
+                if(remitidas==facturadas){
                     cantidadFinal=0.00;
                 }else{
                     if(remitidas==0){
-                        cantidadFinal=pedidas;
+                        cantidadFinal=facturadas;
                     }else{
-                        cantidadFinal=remitidas;
+                        cantidadFinal=facturadas - remitidas;
                     }
                 }
                 if(facturadas > 0){
                     if(pedi.getCantidadArticuloPendiente()> 0 ){
-                    cantidadFinal=remitidas - facturadas;
+                        cantidadFinal=facturadas - remitidas;
                     }
                 }
                 pedi.setNumeroVendedor(rs.getInt("COD_VENDED"));
-                pedi.setCantidadArticulo(pedidas);
+                pedi.setCantidadArticulo(cantidadFinal);
                 pedi.setCantidadArticuloPendiente(facturadas);
                 pedi.setCantidadArticulosTotales(remitidas);
                 pedi.setCodigoArticulo(rs.getString("COD_ARTICU"));
