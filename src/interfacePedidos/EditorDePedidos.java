@@ -53,6 +53,12 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
     private int idVendedor;
     private String sEmpresa;
     private String fechaPedidoT;
+    private String vendedor;
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
+    
     
     
     public EditorDePedidos() {
@@ -645,6 +651,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             empresa=ped.getEmpresa();
             nPedido=ped.getCodigoTangoDePedido();
             cliente=ped.getRazonSocial();
+            //vendedor=ped.getNumeroVendedor()+"("+
             aaa++;   
         }
         
@@ -670,7 +677,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             } catch (IOException ex) {
                 Logger.getLogger(EditorDePedidos.class.getName()).log(Level.SEVERE, null, ex);
             }
-            String encabezado="Reparto - "+dia_sem+" "+fechEnv+" - "+empresa+" - "+nPedido+" - "+cliente;
+            String encabezado="Reparto - "+dia_sem+" "+fechEnv+" - "+empresa+" - "+nPedido+" - Vend: "+vendedor.toLowerCase()+" - "+cliente.toUpperCase();
             System.out.println(encabezado);
             mail.enviarMailDeEnvioDePedido(encabezado,enviosPed,"",notificar);
             enviosPed.clear();

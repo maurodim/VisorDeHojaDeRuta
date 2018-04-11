@@ -253,6 +253,7 @@ public class Selector extends javax.swing.JInternalFrame {
         System.out.println("CANTIDAD DE DETALLE PEDIDO: "+seleccion.size());
         EditorDePedidos editor=new EditorDePedidos(seleccion);
         InicioVisorDeHojaDeRuta.jDesktopPane1.add(editor);
+        editor.setVendedor(vendedor.getNombre());
         editor.setVisible(true);
         editor.pack();
         editor.setTitle("EDITOR DE PEDIDOS VENDEDOR: "+vendedor.getNombre()+" EMPRESA: "+empresa+" FECHA PEDIDO: "+fechaSeleccionada);
