@@ -51,8 +51,8 @@ public class Mail {
         propiedades.put("mail.smtp.host","smtp.office365.com");
         propiedades.put("mail.smtp.starttls.enable","true");
         propiedades.put("mail.smtp.port",587);
-        propiedades.put("mail.smtp.mail.sender","logistica@sidercon.com");
-        propiedades.put("mail.smtp.user","logistica@sidercon.com");
+        propiedades.put("mail.smtp.mail.sender","no_responder@sidercon.com.ar");
+        propiedades.put("mail.smtp.user","no_responder@sidercon.com.ar");
         propiedades.put("mail.smtp.auth","true");
         sesion=Session.getDefaultInstance(propiedades);
         
