@@ -82,7 +82,7 @@ public class Selector extends javax.swing.JInternalFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BU3", "SIDERCON", "SRL" }));
 
-        jLabel3.setText("Seleccionar Fecha Pedido en Tango");
+        jLabel3.setText("Seleccionar Fecha Factura en Tango");
 
         jButton1.setText("Siguiente >>>");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
