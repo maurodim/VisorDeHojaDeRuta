@@ -667,8 +667,8 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             //Connection cc=(Connection)bd;
-            //String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED,FECHA_FACTURA from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_FACTURA = '"+fecha+"' order by NRO_PEDIDO desc";
-            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' order by NRO_PEDIDO desc";
+            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED,FECHA_FACTURA from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_FACTURA = '"+fecha+"' order by NRO_PEDIDO desc";
+            //String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' order by NRO_PEDIDO desc";
             Statement st=bd.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
@@ -686,7 +686,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     pedi.setFechaDePedido(rs.getString("FECHA_PEDI"));
                     pedi.setRazonSocial(rs.getString("RAZON_SOCI"));
                     pedi.setEmpresa(rs.getString("TALON_PED"));
-                    //pedi.setFechaFactura(rs.getString("FECHA_FACTURA"));
+                    pedi.setFechaFactura(rs.getString("FECHA_FACTURA"));
                     listadoP.add(pedi);
                     System.out.println(pedi.getRazonSocial());
                     pedidoNuevo=rs.getString("NRO_PEDIDO");
@@ -719,8 +719,8 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
         String fechaP;
         while(it.hasNext()){
             pedido=(Pedidos) it.next();
-            //fechaP=pedido.getFechaFactura().substring(0,10);
-            fechaP=pedido.getFechaDePedido().substring(0,10);
+            fechaP=pedido.getFechaFactura().substring(0,10);
+            //fechaP=pedido.getFechaDePedido().substring(0,10);
             fila[0]=fechaP;
             fila[1]=pedido.getNumeroPedidos();
             fila[2]=pedido.getRazonSocial();
