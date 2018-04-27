@@ -563,7 +563,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         while(ill.hasNext()){
             PedidosParaReparto ped=(PedidosParaReparto)ill.next();
             jProgressBar1.setValue(aaa);
-            
+            ped.setNotificacion(notificar);
             System.err.println(ped.getCodigoTangoDePedido()+" fecha "+ped.getFechaPedidosTango()+" entrega "+ped.getFechaEnvio()+" EMPRESA "+ped.getEmpresa());
             String fPedido=ped.getFechaPedidosTango();
             
@@ -613,7 +613,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
                 //fechaEnvio="00/00/0000";
             }
             ped.setFechaEnvio(fechaEnvio);
-            ped.setNotificacion(notificar);
+            
             }
             if((Boolean)jTable1.getValueAt(aaa,3)){
                 int alerta=0;
