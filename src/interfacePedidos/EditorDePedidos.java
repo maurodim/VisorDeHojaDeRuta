@@ -312,7 +312,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Renglon 3");
 
-        jLabel6.setText("<html><strong>Para modificar la cantidad a enviar :<br>\n- Corrija la cantidad en el item deseado y presione ENTER\n-LA CANTIDAD DEBE SER MENOR O IGUAL A LA CANTIDAD QUE RESTA FACTURAR</strong></html>");
+        jLabel6.setText("<html><strong>Para modificar la cantidad a transmitir al LPM<br>\n- Corregir la cantidad del item y presione ENTER<br>\n-La cantidad deberá ser menor o igual a la cantidad pendiente de remitir</strong></html>");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -603,6 +603,14 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         String observaciones=this.jTextField1.getText();
         String observaciones1=this.jTextField2.getText();
         String observaciones2=this.jTextField3.getText();
+        /*
+        observaciones=observaciones.replaceAll("[^\\\\dA-Za-z]", "");
+        observaciones=observaciones.replaceAll("[^a-zA-Z0-9]", "");
+        observaciones1=observaciones1.replaceAll("[^\\\\dA-Za-z]", "");
+        observaciones1=observaciones1.replaceAll("[^a-zA-Z0-9]", "");
+        observaciones2=observaciones2.replaceAll("[^\\\\dA-Za-z]", "");
+        observaciones2=observaciones2.replaceAll("[^a-zA-Z0-9]", "");
+        */
         while(ill.hasNext()){
             PedidosParaReparto ped=(PedidosParaReparto)ill.next();
             jProgressBar1.setValue(aaa);

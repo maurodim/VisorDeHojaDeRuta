@@ -235,7 +235,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;strong&gt;Para modificar la cantidad a enviar :&lt;br&gt;&#xa;- Corrija la cantidad en el item deseado y presione ENTER&#xa;-LA CANTIDAD DEBE SER MENOR O IGUAL A LA CANTIDAD QUE RESTA FACTURAR&lt;/strong&gt;&lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;strong&gt;Para modificar la cantidad a transmitir al LPM&lt;br&gt;&#xa;- Corregir la cantidad del item y presione ENTER&lt;br&gt;&#xa;-La cantidad deber&#xe1; ser menor o igual a la cantidad pendiente de remitir&lt;/strong&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>
