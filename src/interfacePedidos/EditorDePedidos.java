@@ -603,14 +603,14 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         String observaciones=this.jTextField1.getText();
         String observaciones1=this.jTextField2.getText();
         String observaciones2=this.jTextField3.getText();
-        /*
-        observaciones=observaciones.replaceAll("[^\\\\dA-Za-z]", "");
-        observaciones=observaciones.replaceAll("[^a-zA-Z0-9]", "");
-        observaciones1=observaciones1.replaceAll("[^\\\\dA-Za-z]", "");
-        observaciones1=observaciones1.replaceAll("[^a-zA-Z0-9]", "");
-        observaciones2=observaciones2.replaceAll("[^\\\\dA-Za-z]", "");
-        observaciones2=observaciones2.replaceAll("[^a-zA-Z0-9]", "");
-        */
+        
+        observaciones=observaciones.replaceAll("'", "");
+        //observaciones=observaciones.replaceAll("[^a-zA-Z0-9]", "");
+        observaciones1=observaciones1.replaceAll("'", "");
+        //observaciones1=observaciones1.replaceAll("[^a-zA-Z0-9]", "");
+        observaciones2=observaciones2.replaceAll("'", "");
+        //observaciones2=observaciones2.replaceAll("[^a-zA-Z0-9]", "");
+        
         while(ill.hasNext()){
             PedidosParaReparto ped=(PedidosParaReparto)ill.next();
             jProgressBar1.setValue(aaa);
