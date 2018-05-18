@@ -126,7 +126,7 @@ public class Mail {
 "                    <td>"+pedido.getEmpresa()+"</td>\n" +
 "                    <td>"+pedido.getCodigoArticulo()+"</td>\n" +
 "                    <td>"+pedido.getDescripcionArticulo()+"</td>\n" +
-"                    <td>"+pedido.getCantidadArticulo()+"</td>\n" +
+"                    <td>"+Math.round(pedido.getCantidadArticulo() * 100.0) / 100.0+"</td>\n" +
 "                    <td>"+pedido.getFechaEnvio()+"</td>\n" +
 "                    \n" +
 "                </tr>\n" ;

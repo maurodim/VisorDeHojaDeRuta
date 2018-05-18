@@ -719,7 +719,9 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             while(itLstP.hasNext()){
                 PedidosParaReparto ped=(PedidosParaReparto) itLstP.next();
                 if(ped.getMarcadoParaReparto()==1){
+                    //ped.setCantidadArticulo(Double.MAX_VALUE);
                     enviosPed.add(ped);
+                    
                     fechEnv=ped.getFechaEnvio();
                     System.out.println(fechEnv);
                 }
@@ -1000,12 +1002,17 @@ private void validarEnvio(){
         String fechasPedidos = null;
         String resultado=null;
         int aa=0;
+        Double diferen=0.00;
         while(it.hasNext()){
             pedid=(PedidosParaReparto) it.next();
             resultado=exp.validarEnviadoHdr(pedid);
+            
             if(resultado !=null){
                 fechasPedidos+=resultado;
-                
+                diferen=pedid.getCantidadArticuloPendiente()-(pedid.getCantidadArticulo() + pedid.getCantidadArticulosTotales());
+                if(diferen <= pedid.getCantidadArticulo()){
+                    verificado.add(pedid);
+                }
             }else{
                 //listadoDePedidos.remove(aa);
                 verificado.add(pedid);
