@@ -610,7 +610,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
         //observaciones1=observaciones1.replaceAll("[^a-zA-Z0-9]", "");
         observaciones2=observaciones2.replaceAll("'", "");
         //observaciones2=observaciones2.replaceAll("[^a-zA-Z0-9]", "");
-        
+        Boolean errorEnFecha=false;
         while(ill.hasNext()){
             PedidosParaReparto ped=(PedidosParaReparto)ill.next();
             jProgressBar1.setValue(aaa);
@@ -619,13 +619,16 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             String fPedido=ped.getFechaPedidosTango();
             
             String fEnvio=ped.getFechaEnvio();
+            
             if(fEnvio.length() > 10)fEnvio.substring(0,10);
             int marcadoReparto=0;
             int marcadoProceso=0;
             Double cantidad=(Double)jTable1.getValueAt(aaa,5);
             Double acopio=(Double)jTable1.getValueAt(aaa,10);
             if((Boolean)jTable1.getValueAt(aaa,1)){
-              marcadoReparto=1;  
+              marcadoReparto=1;
+              
+              //if()
             }
             if((Boolean)jTable1.getValueAt(aaa,2)){
                 marcadoProceso=1;
@@ -643,12 +646,13 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             ped.setCantidadArticuloPendiente(acopio);
             if((Boolean)jTable1.getValueAt(aaa,3)){
                 ped.setFechaEnvio(fechaPedido);
+                errorEnFecha=ped.getFechaEnvio().contains("-");
             }else{
             String fechaEnvio="";
             fechaEnvio=(String) jTable1.getValueAt(aaa,7);
             System.out.println(fechaEnvio);
             //fechaEnvio.trim();
-            if(fechaEnvio!=null){
+            if(fechaEnvio.contains("-")){
                 DecimalFormat fr=new DecimalFormat("00");
                 Calendar c1=Calendar.getInstance();
                 Calendar c2=new GregorianCalendar();
@@ -707,7 +711,9 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             //vendedor=ped.getNumeroVendedor()+"("+
             aaa++;   
         }
-        
+        if(errorEnFecha){
+            JOptionPane.showMessageDialog(this,"Por favor verifique la fecha seleccionada, o bien seleccionela correctamente y vuelva a intentarlo. Gracias");
+        }else{
         if(exp.enviar(listadoDePedidos)){
             
             aaa++;
@@ -742,7 +748,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             String msj=" LO SIENTO HA OCURRIDO UN ERROR EN EL ENVIO \n POR FAVOR INTENTELO NUEVAMENTE LUEGO.\n GRACIAS";
             exp.notificar(msj);
         }
-        
+        }
           listadoDePedidos.clear();
           this.dispose();
 
@@ -804,7 +810,7 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         if(listadoDePedidos.size() == 0){
-            JOptionPane.showMessageDialog(this,"Por Favor Selecciones un Pedido no Pasado a Sistema HDR. Gracias");
+            JOptionPane.showMessageDialog(this,"Por Favor Selecciones un Pedido no Pasado a Sistema HDR o las cantidades pendientes no sean 0. Gracias");
             this.dispose();
         }
     }//GEN-LAST:event_formInternalFrameActivated
@@ -1021,8 +1027,8 @@ private void validarEnvio(){
             aa++;
         }
         if(fechasPedidos !=null){
-                exp.notificar(fechasPedidos);
-            }
+            exp.notificar(fechasPedidos);
+        }
         listadoDePedidos.clear();
         listadoDePedidos=verificado;
         

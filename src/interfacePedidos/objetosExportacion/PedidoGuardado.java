@@ -864,7 +864,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     descArtic=ped.getDescripcionArticulo();
                 }
                 sql="select pedidos_carga1.numero,pedidos_carga1.entrega from pedidos_carga1 where NRO_PEDIDO like '%"+numeroPed+"' and CANT_PEDID ="+ped.getCantidadArticulo()+" and TALON_PEDI ='"+ped.getEmpresa()+"' and ID_GVA03="+ped.getIdPedidosTango();
-                
+                System.out.println(sql);
                 st.execute(sql);
                 rs=st.getResultSet();
                 int h=0;
