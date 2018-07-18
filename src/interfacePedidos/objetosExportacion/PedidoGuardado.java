@@ -825,7 +825,13 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 //pedi.setMarcadoParaReparto(rs.getInt("reparto"));
                 //pedi.setZonaAsignada(rs.getInt("zona"));
                 //pedi.setAlertaAsignada(rs.getInt("alerta"));
-                if(cantidadFinal > 0.00)listadoP.add(pedi);
+                if(cantidadFinal > 0.00){
+                    if(pedi.getCantidadArticulo()!=null){
+                    listadoP.add(pedi);
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ha Ocurrido algún error en la lectura a Tango, avise al administrador");
+                    }
+                }
                 System.out.println(pedi.getRazonSocial());
                 
             }
