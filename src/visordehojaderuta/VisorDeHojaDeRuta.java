@@ -6,7 +6,9 @@ package visordehojaderuta;
 
 import interfacePedidos.objetosExportacion.ConeccionRemotaBdMysql;
 import interfacePedidos.procesosDelExportadorDePedidos.Conectar;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.DecimalFormat;
@@ -42,6 +44,7 @@ public class VisorDeHojaDeRuta {
     public static void main(String[] args) throws IOException {
         
         //Coneccion cnn=new Coneccion();
+               
         Conectar conV=new ConeccionRemotaBdMysql();
         conVV=conV.obtenerConeccion();
          //log l=new log();

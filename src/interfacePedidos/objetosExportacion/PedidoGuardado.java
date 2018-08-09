@@ -735,6 +735,8 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             String sql="select * from ar_pedidos where NRO_PEDIDO like '"+nroPedido+"' order by ID_GVA03";
+            System.out.println(sql);
+            
             Statement st=bd.createStatement();
             st.execute(sql);
             ResultSet rs=st.getResultSet();
