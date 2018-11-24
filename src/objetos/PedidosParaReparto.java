@@ -110,6 +110,17 @@ public class PedidosParaReparto implements Busquedas{
         private Integer idPedidosTango;
         private Double cantidadOriginal;
         private int notificacion;
+        private String descripcionSola;
+
+    public String getDescripcionSola() {
+        return descripcionSola;
+    }
+
+    public void setDescripcionSola(String descripcionSola) {
+        this.descripcionSola = descripcionSola;
+    }
+        
+        
 
     public int getNotificacion() {
         return notificacion;

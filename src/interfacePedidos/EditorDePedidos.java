@@ -17,6 +17,7 @@ import java.util.Iterator;
 import javax.swing.JCheckBox;
 import objetos.AlertasDeRepartos;
 import facturacion.clientes.ClientesTango;
+import interfacePedidos.objetosExportacion.ClientesTangoVerificado;
 import java.awt.event.KeyEvent;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -51,9 +52,14 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
     private String sEmpresa;
     private String fechaPedidoT;
     private String vendedor;
+    private ClientesTangoVerificado cliTV;
 
     public void setVendedor(String vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public void setCliTV(ClientesTangoVerificado cliTV) {
+        this.cliTV = cliTV;
     }
     
     
@@ -741,9 +747,15 @@ public class EditorDePedidos extends javax.swing.JInternalFrame {
             String encabezado="Reparto - "+dia_sem+" "+fechEnv+" - "+empresa+" - "+nPedido+" - Vend: "+vendedor.toLowerCase()+" - "+cliente.toUpperCase();
             System.out.println(encabezado);
             mail.enviarMailDeEnvioDePedido(encabezado,enviosPed,"",notificar);
-            enviosPed.clear();
+            
             jProgressBar1.setValue(aaa);
             JOptionPane.showMessageDialog(this,"Pedido Enviado al Sistema HDR");
+            
+            ListadoCliente lstCli=new ListadoCliente(null,true,cliTV);
+            lstCli.setVisible(true);
+            String direccC=ListadoCliente.jTextField1.getText();
+            mail.enviarMailDeEnvioDePedidoCliente(encabezado, enviosPed, dia_sem, direccC);
+            enviosPed.clear();
         }else{
             String msj=" LO SIENTO HA OCURRIDO UN ERROR EN EL ENVIO \n POR FAVOR INTENTELO NUEVAMENTE LUEGO.\n GRACIAS";
             exp.notificar(msj);

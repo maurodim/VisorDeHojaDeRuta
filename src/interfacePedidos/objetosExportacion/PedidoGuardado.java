@@ -22,6 +22,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import facturacion.clientes.ClientesTango;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import javax.swing.table.DefaultTableModel;
 import objetos.Pedidos;
 import objetos.PedidosParaReparto;
@@ -667,7 +670,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
             ArrayList listadoP=new ArrayList();
             
             //Connection cc=(Connection)bd;
-            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED,FECHA_FACTURA from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_FACTURA = '"+fecha+"' order by NRO_PEDIDO desc";
+            String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED,FECHA_FACTURA,COD_CLIENT from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_FACTURA = '"+fecha+"' order by NRO_PEDIDO desc";
             //String sql="select NRO_PEDIDO,FECHA_PEDI,RAZON_SOCI,TALON_PED,COD_VENDED from AR_PEDIDOS where COD_VENDED="+vendedor+" and FECHA_PEDI = '"+fecha+"' order by NRO_PEDIDO desc";
             Statement st=bd.createStatement();
             st.execute(sql);
@@ -687,6 +690,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                     pedi.setRazonSocial(rs.getString("RAZON_SOCI"));
                     pedi.setEmpresa(rs.getString("TALON_PED"));
                     pedi.setFechaFactura(rs.getString("FECHA_FACTURA"));
+                    pedi.setCodigoCliente(rs.getString("COD_CLIENT"));
                     listadoP.add(pedi);
                     System.out.println(pedi.getRazonSocial());
                     pedidoNuevo=rs.getString("NRO_PEDIDO");
@@ -734,8 +738,39 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
         try {
             ArrayList listadoP=new ArrayList();
             
-            String sql="select * from ar_pedidos where NRO_PEDIDO like '"+nroPedido+"' order by ID_GVA03";
-            System.out.println(sql);
+            String sql="select * from ar_pedidos where NRO_PEDIDO like '%"+nroPedido+"' order by ID_GVA03";
+            //if(nroPedido.length() < 13)sql="select * from ar_pedidos where NRO_PEDIDO like ' "+nroPedido+"' order by ID_GVA03";
+            //System.out.println(sql);
+                BufferedWriter bw = null;
+                FileWriter fw = null;
+
+                try {
+                    String data = sql;
+                    File file = new File("Seguimiento/log.txt");
+                    // Si el archivo no existe, se crea!
+                    if (!file.exists()) {
+                        file.createNewFile();
+                    }
+                    // flag true, indica adjuntar información al archivo.
+                    fw = new FileWriter(file.getAbsoluteFile(), true);
+                    bw = new BufferedWriter(fw);
+                    bw.write(data);
+                    bw.newLine();
+                    System.out.println("información agregada!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                                    //Cierra instancias de FileWriter y BufferedWriter
+                        if (bw != null)
+                            bw.close();
+                        if (fw != null)
+                            fw.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            
             
             Statement st=bd.createStatement();
             st.execute(sql);
@@ -773,6 +808,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 //pedi.setCodigoDeposito(rs.getInt(""));//FALTA EL CODIGO DE DEPOSITO
                 pedi.setCondicionDeVenta(rs.getInt("COND_VTA"));
                 pedi.setDescripcionArticulo(rs.getString("DESC_ARTIC")+rs.getString("DESC_ADIC"));
+                pedi.setDescripcionSola(rs.getString("DESC_ARTIC"));
                 pedi.setFechaPedidosTango(rs.getString("FECHA_PEDI"));
                 String fechEnv=rs.getString("FECHA_PEDI");
                 System.out.println("vamos a ver la fecha de envio "+fechEnv);
@@ -829,7 +865,7 @@ if((cantidadFinal ==0) && (validarComprobante.equals("X"))){
                 //pedi.setAlertaAsignada(rs.getInt("alerta"));
                 if(cantidadFinal > 0.00){
                     if(pedi.getCantidadArticulo()!=null){
-                    listadoP.add(pedi);
+                        listadoP.add(pedi);
                     }else{
                         JOptionPane.showMessageDialog(null, "Ha Ocurrido algún error en la lectura a Tango, avise al administrador");
                     }

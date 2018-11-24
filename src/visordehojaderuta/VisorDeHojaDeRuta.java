@@ -44,7 +44,13 @@ public class VisorDeHojaDeRuta {
     public static void main(String[] args) throws IOException {
         
         //Coneccion cnn=new Coneccion();
-               
+        File bases=new File("Seguimiento"); 
+        if(!bases.isDirectory()){
+            //JOptionPane.showMessageDialog(null,"INICIANDO CONFIGURACION Y CREACION DE LA BASE DE DATOS");
+            bases.mkdirs();
+            //ConeccionLocal.CrearDb();
+            
+        }
         Conectar conV=new ConeccionRemotaBdMysql();
         conVV=conV.obtenerConeccion();
          //log l=new log();

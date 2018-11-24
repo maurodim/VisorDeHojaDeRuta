@@ -170,4 +170,70 @@ public class Mail {
             System.err.println("EL MENSAJE NO SE PUDO ENVIAR "+me);
         }
    }
+   public void enviarMailDeEnvioDePedidoCliente(String encabezado,ArrayList listadoPedido,String causa,String direccionCliente){
+       init();
+        try{
+            MimeMessage mensaje=new MimeMessage(sesion);
+            mensaje.setFrom(new InternetAddress((String)propiedades.get("mail.smtp.mail.sender")));
+            //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("mauro@bambusoft.com.ar"));
+            mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress(direccionCliente));
+            //mensaje.addRecipient(Message.RecipientType.TO,new InternetAddress("hernangonzalez@sidercon.com"));
+            //mensaje.addRecipient(Message.RecipientType.CC,new InternetAddress("ventas@sidercon.com"));
+            // aca envalúo el texto y el asunto recorriendo el pedido o los items eliminados
+            
+            
+            mensaje.setSubject(encabezado);
+            String detalle="";
+            Iterator it=listadoPedido.listIterator();
+            PedidosParaReparto pedido;
+            while(it.hasNext()){
+                pedido=(PedidosParaReparto) it.next();
+                //if(pedido.getMarcadoParaReparto()==1){
+                detalle=detalle +"                <tr style=\"width: 100%;\">\n" +
+"                    <td>"+pedido.getRazonSocial()+"</td>\n" +
+"                    <td>"+pedido.getCodigoArticulo()+"</td>\n" +
+"                    <td>"+pedido.getDescripcionSola()+"</td>\n" +
+"                    <td>"+Math.round(pedido.getCantidadArticulo() * 100.0) / 100.0+"</td>\n" +
+"                    <td>"+pedido.getFechaEnvio()+"</td>\n" +
+"                    \n" +
+"                </tr>\n" ;
+
+                //}
+                }
+            String cuerpo="<html>\n" +
+"    <head>\n" +
+"        <title>TODO supply a title</title>\n" +
+"        <meta charset=\"UTF-8\">\n" +
+"        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+"    </head>\n" +
+"    <body>\n" +
+"        <div>\n" +
+"            <div style=\"width: 100%;\">\n" +
+"               <strong> "+encabezado+"</strong>\n" +
+"            <br></div>\n" +
+"            <table border=\"1\">\n" +
+"                \n" +
+"                <tr style=\"width: 100%;\">\n" +
+"                    <td><strong>Cliente</strong></td>\n" +                   
+"                    <td><strong>Codigo</strong></td>\n" +
+"                    <td><strong>Articulo</strong></td>\n" +
+"                    <td><strong>Cantidad</strong></td>\n" +
+"                    <td><strong>Fecha de Entrega</strong></td>\n" +
+"                    \n" +
+"                </tr>\n" +
+"                \n" +detalle+"            </table>\n" +
+                    
+"        </div>\n" +
+"    </body>\n" +
+"</html>";
+            //mensaje.setText(cuerpo);
+            mensaje.setContent(cuerpo,"text/html; charset=utf-8");
+            Transport t=sesion.getTransport("smtp");
+            t.connect((String)propiedades.get("mail.smtp.user"), password);
+            t.sendMessage(mensaje,mensaje.getAllRecipients());
+            t.close();
+        }catch(MessagingException me){
+            System.err.println("EL MENSAJE NO SE PUDO ENVIAR "+me);
+        }
+   }
 }

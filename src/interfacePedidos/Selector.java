@@ -5,8 +5,10 @@
  */
 package interfacePedidos;
 
+import interfacePedidos.objetosExportacion.ClientesTangoVerificado;
 import interfacePedidos.objetosExportacion.PedidoGuardado;
 import interfacePedidos.objetosExportacion.Vendedor;
+import interfacePedidos.procesosDelExportadorDePedidos.Clientable;
 import interfacePedidos.procesosDelExportadorDePedidos.Editable;
 import interfacePedidos.procesosDelExportadorDePedidos.ExportacionDePedidos;
 import java.sql.Connection;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import objetos.ConeccionSqlTango;
 import objetos.Pedidos;
 import visordehojaderuta.InicioVisorDeHojaDeRuta;
@@ -244,10 +247,16 @@ public class Selector extends javax.swing.JInternalFrame {
         Pedidos pedid=new Pedidos();
         ExportacionDePedidos expo=new PedidoGuardado();
         pedid=(Pedidos) listadoPedidos.get(posicion);
+        if(pedid.getNumeroPedidos().length() < 13)JOptionPane.showMessageDialog(null, "POR FAVOR AVISE, NUMERO DE PEDIDO MAL REGISTRADO");
         seleccion=expo.leerDetalleTango(vendedor.getId_tango(),fechaSeleccionada, conSql,pedid.getNumeroPedidos());
         System.out.println("CANTIDAD DE DETALLE PEDIDO: "+seleccion.size());
+        Clientable cliTab=new ClientesTangoVerificado();
+        ClientesTangoVerificado cliTV= new ClientesTangoVerificado();
+        cliTV=(ClientesTangoVerificado) cliTab.Cargar(conSql,pedid.getCodigoCliente());
+        System.out.println(cliTV.getRazonSocial()+" // "+pedid.getCodigoCliente());
         EditorDePedidos editor=new EditorDePedidos(seleccion);
         InicioVisorDeHojaDeRuta.jDesktopPane1.add(editor);
+        editor.setCliTV(cliTV);
         editor.setVendedor(vendedor.getNombre());
         editor.setVisible(true);
         editor.pack();
